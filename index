@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zara & Zipp: My Robot Friend Knows Everything!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Fredoka+One&display=swap');
+
+  :root {
+    --sky: #E8F4FF;
+    --deep-blue: #1A2E6B;
+    --robot-teal: #00B4C6;
+    --sunny: #FFD23F;
+    --coral: #FF6B6B;
+    --mint: #A8EDCA;
+    --purple: #9B5DE5;
+    --white: #FFFFFF;
+    --soft-gray: #F4F6FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--soft-gray);
+    color: var(--deep-blue);
+    overflow-x: hidden;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1A2E6B 0%, #0D1B4B 40%, #00314A 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(0,180,198,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(155,93,229,0.2) 0%, transparent 50%);
+  }
+
+  .stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite alternate;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.2; transform: scale(1); }
+    to   { opacity: 1;   transform: scale(1.4); }
+  }
+
+  .cover-badge {
+    background: var(--sunny);
+    color: var(--deep-blue);
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-robot {
+    font-size: 100px;
+    animation: float 4s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 30px rgba(0,180,198,0.6));
+    margin-bottom: 10px;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-3deg); }
+    50%       { transform: translateY(-18px) rotate(3deg); }
+  }
+
+  .cover h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(38px, 7vw, 72px);
+    color: var(--white);
+    text-align: center;
+    line-height: 1.1;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .cover h1 span.teal { color: var(--robot-teal); }
+  .cover h1 span.yellow { color: var(--sunny); }
+
+  .cover-sub {
+    font-size: clamp(16px, 3vw, 22px);
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    margin-top: 14px;
+    position: relative;
+    z-index: 2;
+    font-weight: 700;
+  }
+
+  .cover-author {
+    margin-top: 30px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    position: relative;
+    z-index: 2;
+    letter-spacing: 1px;
+  }
+
+  .cover-cta {
+    margin-top: 36px;
+    background: var(--coral);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    padding: 16px 40px;
+    border-radius: 60px;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 30px rgba(255,107,107,0.5);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    animation: pulse-btn 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-btn {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.05); }
+  }
+
+  .cover-cta:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(255,107,107,0.7); }
+
+  /* ── MARKETING STRIP ── */
+  .marketing-strip {
+    background: var(--sunny);
+    padding: 18px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .strip-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--deep-blue);
+  }
+
+  .strip-item span { font-size: 20px; }
+
+  /* ── PAGES ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ── PAGE SPREAD ── */
+  .spread {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 40px 0;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .spread { grid-template-columns: 1fr; }
+  }
+
+  .spread-text h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(26px, 5vw, 40px);
+    color: var(--deep-blue);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .spread-text p {
+    font-size: clamp(16px, 2.5vw, 20px);
+    line-height: 1.7;
+    color: #334;
+  }
+
+  .scene-box {
+    background: var(--sky);
+    border-radius: 32px;
+    padding: 30px;
+    text-align: center;
+    font-size: 80px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,80,0.08);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .scene-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 15px;
+    color: var(--robot-teal);
+    letter-spacing: 1px;
+  }
+
+  /* ── COLOR THEMES PER CHAPTER ── */
+  .ch-1 .scene-box { background: #E0F7FA; }
+  .ch-2 .scene-box { background: #EDE7F6; }
+  .ch-3 .scene-box { background: #FFF8E1; }
+  .ch-4 .scene-box { background: #E8F5E9; }
+  .ch-5 .scene-box { background: #FCE4EC; }
+  .ch-6 .scene-box { background: #E3F2FD; }
+
+  /* ── CHAPTER HEADER ── */
+  .chapter-header {
+    padding: 50px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ch-number {
+    font-family: 'Fredoka One', cursive;
+    font-size: 64px;
+    line-height: 1;
+    opacity: 0.12;
+    color: var(--deep-blue);
+    position: absolute;
+    left: -10px;
+    top: 40px;
+  }
+
+  .ch-pill {
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 50px;
+    color: white;
+  }
+
+  .ch-1-pill { background: var(--robot-teal); }
+  .ch-2-pill { background: var(--purple); }
+  .ch-3-pill { background: #F79F1F; }
+  .ch-4-pill { background: #1DD1A1; }
+  .ch-5-pill { background: var(--coral); }
+  .ch-6-pill { background: var(--deep-blue); }
+
+  .chapter-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(22px, 4vw, 34px);
+    color: var(--deep-blue);
+  }
+
+  /* ── FUN FACT BOXES ── */
+  .fact-box {
+    border-radius: 24px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .fact-box.teal  { background: #E0F7FA; border-left: 6px solid var(--robot-teal); }
+  .fact-box.purple{ background: #EDE7F6; border-left: 6px solid var(--purple); }
+  .fact-box.yellow{ background: #FFF8E1; border-left: 6px solid var(--sunny); }
+  .fact-box.green { background: #E8F5E9; border-left: 6px solid #1DD1A1; }
+  .fact-box.pink  { background: #FCE4EC; border-left: 6px solid var(--coral); }
+
+  .fact-icon { font-size: 32px; flex-shrink: 0; }
+
+  .fact-box p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: #334;
+  }
+
+  .fact-box strong { color: var(--deep-blue); font-weight: 900; }
+
+  /* ── DIALOGUE ── */
+  .dialogue {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin: 18px 0;
+  }
+
+  .dialogue.right { flex-direction: row-reverse; }
+
+  .bubble {
+    background: white;
+    border-radius: 20px;
+    padding: 14px 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    box-shadow: 0 4px 16px rgba(0,0,80,0.08);
+    max-width: 80%;
+    color: #334;
+  }
+
+  .bubble.robot { background: #E0F7FA; border-radius: 20px 20px 20px 4px; }
+  .bubble.zara  { background: #FCE4EC; border-radius: 20px 20px 4px 20px; }
+
+  .chat-avatar { font-size: 36px; flex-shrink: 0; }
+
+  /* ── QUIZ ── */
+  .quiz-box {
+    background: linear-gradient(135deg, var(--deep-blue), #0a1a50);
+    border-radius: 28px;
+    padding: 32px;
+    margin: 32px 0;
+    color: white;
+  }
+
+  .quiz-box h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 24px;
+    color: var(--sunny);
+    margin-bottom: 20px;
+  }
+
+  .quiz-q {
+    font-size: 17px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 480px) { .quiz-options { grid-template-columns: 1fr; } }
+
+  .quiz-opt {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .quiz-opt:hover { background: rgba(255,255,255,0.2); border-color: var(--sunny); }
+  .quiz-opt.correct { background: rgba(29,209,161,0.3); border-color: #1DD1A1; }
+  .quiz-opt.wrong   { background: rgba(255,107,107,0.3); border-color: var(--coral); }
+
+  .quiz-result {
+    margin-top: 14px;
+    font-size: 16px;
+    min-height: 28px;
+    font-weight: 700;
+    color: var(--sunny);
+  }
+
+  /* ── ACTIVITY PAGE ── */
+  .activity-box {
+    background: white;
+    border-radius: 28px;
+    padding: 32px;
+    margin: 32px 0;
+    box-shadow: 0 8px 40px rgba(0,0,80,0.06);
+  }
+
+  .activity-box h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 24px;
+    color: var(--purple);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 16px; }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--robot-teal);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-text { font-size: 16px; line-height: 1.6; color: #334; padding-top: 4px; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    font-size: 28px;
+    letter-spacing: 12px;
+    opacity: 0.3;
+    margin: 40px 0;
+  }
+
+  /* ── BUY BOX ── */
+  .buy-box {
+    background: linear-gradient(135deg, #FF6B6B, #FF4757);
+    border-radius: 32px;
+    padding: 48px 36px;
+    text-align: center;
+    margin: 60px 0 20px;
+    color: white;
+    box-shadow: 0 20px 60px rgba(255,71,87,0.3);
+  }
+
+  .buy-box h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(28px, 5vw, 46px);
+    margin-bottom: 14px;
+  }
+
+  .buy-box p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .price-tag {
+    display: inline-block;
+    font-family: 'Fredoka One', cursive;
+    font-size: 52px;
+    margin-bottom: 24px;
+  }
+
+  .price-tag .orig {
+    font-size: 22px;
+    text-decoration: line-through;
+    opacity: 0.6;
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+  }
+
+  .buy-btn {
+    background: white;
+    color: var(--coral);
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    padding: 18px 56px;
+    border-radius: 60px;
+    display: inline-block;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none;
+  }
+
+  .buy-btn:hover { transform: scale(1.06); }
+
+  .guarantee {
+    margin-top: 20px;
+    font-size: 14px;
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+  }
+
+  .testi {
+    background: white;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 6px 24px rgba(0,0,80,0.07);
+  }
+
+  .testi-stars { color: var(--sunny); font-size: 18px; margin-bottom: 10px; }
+
+  .testi p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #445;
+    margin-bottom: 14px;
+  }
+
+  .testi-name {
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--deep-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── SECTION HEADLINE ── */
+  .section-headline {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(28px, 5vw, 44px);
+    color: var(--deep-blue);
+    text-align: center;
+    margin: 60px 0 8px;
+  }
+
+  .section-sub {
+    text-align: center;
+    color: #778;
+    font-size: 17px;
+    margin-bottom: 36px;
+  }
+
+  /* ── WHAT YOU'LL LEARN ── */
+  .learn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin: 28px 0;
+  }
+
+  .learn-card {
+    background: white;
+    border-radius: 22px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,80,0.06);
+    transition: transform 0.2s;
+  }
+
+  .learn-card:hover { transform: translateY(-4px); }
+
+  .learn-icon { font-size: 42px; margin-bottom: 12px; }
+
+  .learn-card h4 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    color: var(--deep-blue);
+    margin-bottom: 6px;
+  }
+
+  .learn-card p { font-size: 14px; color: #556; line-height: 1.5; }
+
+  /* ── BACK COVER / FOOTER ── */
+  .back-cover {
+    background: var(--deep-blue);
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+  }
+
+  .back-cover h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 32px;
+    margin-bottom: 14px;
+    color: var(--sunny);
+  }
+
+  .back-cover p { font-size: 17px; opacity: 0.75; max-width: 500px; margin: 0 auto; }
+
+  hr.chapter-rule {
+    border: none;
+    border-top: 2px dashed rgba(0,0,80,0.1);
+    margin: 40px 0;
+  }
+
+  .page-num {
+    text-align: right;
+    font-size: 13px;
+    color: #aab;
+    margin-top: -30px;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <div class="stars" id="stars"></div>
+  <div class="cover-badge">🏆 #1 Kids Tech Book of 2026</div>
+  <div class="cover-robot">🤖</div>
+  <h1><span class="teal">ZARA</span> &amp; <span class="yellow">ZIPP</span></h1>
+  <h1>My Robot Friend<br>Knows Everything!</h1>
+  <p class="cover-sub">A fun adventure about Artificial Intelligence — for kids ages 5–10</p>
+  <p class="cover-author">Written for curious minds everywhere ✨</p>
+  <a class="cover-cta" href="#buy-now">📚 Get the Full eBook — Only $7.99</a>
+</div>
+
+<!-- ═══════════════════ MARKETING STRIP ═══════════════════ -->
+<div class="marketing-strip">
+  <div class="strip-item"><span>🎮</span> 6 Fun Chapters</div>
+  <div class="strip-item"><span>🧩</span> 3 Interactive Quizzes</div>
+  <div class="strip-item"><span>🎨</span> Activities & Crafts</div>
+  <div class="strip-item"><span>🌍</span> Ages 5–10</div>
+  <div class="strip-item"><span>⚡</span> Instant Download</div>
+</div>
+
+<!-- ═══════════════════ WHAT YOU'LL LEARN ═══════════════════ -->
+<div class="page">
+  <h2 class="section-headline">What Kids Will Learn 🧠</h2>
+  <p class="section-sub">Big ideas explained in the simplest, most magical way</p>
+
+  <div class="learn-grid">
+    <div class="learn-card"><div class="learn-icon">🤖</div><h4>What is AI?</h4><p>Learn what robots and computers can really "think"</p></div>
+    <div class="learn-card"><div class="learn-icon">🧠</div><h4>How AI Learns</h4><p>Discover how machines get smarter every day</p></div>
+    <div class="learn-card"><div class="learn-icon">🗣️</div><h4>Talking to AI</h4><p>Why voice assistants understand you</p></div>
+    <div class="learn-card"><div class="learn-icon">🎨</div><h4>AI Art & Stories</h4><p>How AI can draw pictures and write tales</p></div>
+    <div class="learn-card"><div class="learn-icon">🛡️</div><h4>Staying Safe</h4><p>Smart rules for using AI wisely</p></div>
+    <div class="learn-card"><div class="learn-icon">🚀</div><h4>The Future</h4><p>Amazing things AI will help us do tomorrow</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAPTER 1 ═══════════════════ -->
+<div class="page ch-1">
+  <hr class="chapter-rule">
+  <div class="chapter-header">
+    <div class="ch-pill ch-1-pill">Chapter 1</div>
+    <h2>The Day Zara Met ZIPP</h2>
+  </div>
+
+  <div class="spread">
+    <div class="spread-text">
+      <h2>A Robot Arrives! 🎉</h2>
+      <p>It was a rainy Tuesday when Zara found a blinking silver box on her doorstep. Inside, there was a small round robot with big blue eyes and a glowing green tummy.</p>
+      <p style="margin-top:12px">"Hello!" it chirped. "I am <strong>ZIPP</strong> — a Zing-Intelligent-Processing-Pal. But you can just call me Zipp!"</p>
+    </div>
+    <div class="scene-box">
+      🌧️<br>📦<br>🤖
+      <div class="scene-label">A surprise delivery!</div>
+    </div>
+  </div>
+
+  <div class="dialogue">
+    <div class="chat-avatar">👧</div>
+    <div class="bubble zara">"Are you alive? Can you feel things? Do you dream?"</div>
+  </div>
+  <div class="dialogue right">
+    <div class="chat-avatar">🤖</div>
+    <div class="bubble robot">"Great questions! I am a machine, but I am very clever. I learn from information — just like you learn from school! I do not dream, but I do <em>think</em>… a LOT."</div>
+  </div>
+
+  <div class="fact-box teal">
+    <div class="fact-icon">💡</div>
+    <p><strong>Fun Fact:</strong> The word "Artificial Intelligence" was invented in 1956 — before your parents, grandparents, or even most great-grandparents were born! Scientists always dreamed of building smart machines.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAPTER 2 ═══════════════════ -->
+<div class="page ch-2">
+  <hr class="chapter-rule">
+  <div class="chapter-header">
+    <div class="ch-pill ch-2-pill">Chapter 2</div>
+    <h2>How Does ZIPP Think? 🧠</h2>
+  </div>
+
+  <div class="spread">
+    <div class="scene-box">
+      🧩 + 📚 + 🖼️<br>⬇️<br>✨ Answer!
+      <div class="scene-label">How AI learns step by step</div>
+    </div>
+    <div class="spread-text">
+      <h2>Think of a Super Sponge</h2>
+      <p>Zipp explained that AI works like a <strong>giant sponge</strong>. It soaks up millions of pictures, words, sounds, and numbers. Then, when you ask it something, it squeezes all that knowledge out to give you the best answer!</p>
+    </div>
+  </div>
+
+  <div class="dialogue">
+    <div class="chat-avatar">👧</div>
+    <div class="bubble zara">"But HOW do you learn, Zipp? Do you go to school like me?"</div>
+  </div>
+  <div class="dialogue right">
+    <div class="chat-avatar">🤖</div>
+    <div class="bubble robot">"Not exactly! Humans show me thousands of examples. If I see 10,000 pictures of cats, I learn what a cat looks like. If I read 1,000,000 stories, I learn how stories work. More examples = smarter Zipp! 🐱📖"</div>
+  </div>
+
+  <div class="fact-box purple">
+    <div class="fact-icon">🌟</div>
+    <p><strong>Did You Know?</strong> Some AI systems have read more books than every human who has ever lived — combined! Imagine having that many ideas swirling around in your head.</p>
+  </div>
+
+  <div class="activity-box">
+    <h3>🎨 Try It Yourself!</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Draw 5 different dogs on paper. Make them all different colours and sizes.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Now draw a dog you've never seen before! You can, right? Your brain learned from those 5 examples.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">That's exactly how AI learns — from examples! The more it sees, the smarter it gets. You just did AI training! 🎉</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ QUIZ 1 ═══════════════════ -->
+<div class="page">
+  <div class="quiz-box">
+    <h3>🏆 Quick Quiz — Chapter 1 & 2!</h3>
+    <div class="quiz-q">What does AI stand for?</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this, false)">🤔 Awesome Intelligence</button>
+      <button class="quiz-opt" onclick="answer(this, true)">🤖 Artificial Intelligence</button>
+      <button class="quiz-opt" onclick="answer(this, false)">📱 Android Internet</button>
+      <button class="quiz-opt" onclick="answer(this, false)">🦾 Automatic Invention</button>
+    </div>
+    <div class="quiz-result" id="q1-result"></div>
+
+    <div class="quiz-q" style="margin-top:28px">How does AI get smarter?</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer2(this, false)">😴 By sleeping a lot</button>
+      <button class="quiz-opt" onclick="answer2(this, true)">📚 By seeing lots of examples</button>
+      <button class="quiz-opt" onclick="answer2(this, false)">🍕 By eating pizza</button>
+      <button class="quiz-opt" onclick="answer2(this, false)">🎮 By playing video games</button>
+    </div>
+    <div class="quiz-result" id="q2-result"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAPTER 3 ═══════════════════ -->
+<div class="page ch-3">
+  <hr class="chapter-rule">
+  <div class="chapter-header">
+    <div class="ch-pill ch-3-pill">Chapter 3</div>
+    <h2>ZIPP Talks &amp; Listens 🗣️</h2>
+  </div>
+
+  <div class="spread">
+    <div class="spread-text">
+      <h2>Alexa? Siri? That's AI!</h2>
+      <p>Zara realised she had talked to AI before! Every time she asked the family's voice assistant to play music or tell her the weather, she was talking to an AI — just like Zipp!</p>
+    </div>
+    <div class="scene-box">
+      🗣️ "Hey Zipp!"<br>🌊→🔤→💬<br>"Of course!"
+      <div class="scene-label">Voice becomes words becomes answer</div>
+    </div>
+  </div>
+
+  <div class="dialogue right">
+    <div class="chat-avatar">🤖</div>
+    <div class="bubble robot">"When you speak, your voice becomes sound waves. I turn those waves into letters, then words, then I understand your question. Then I search my memory and talk back. It all happens in less than one second! ⚡"</div>
+  </div>
+
+  <div class="fact-box yellow">
+    <div class="fact-icon">🎙️</div>
+    <p><strong>Wow!</strong> Voice assistants like Siri and Alexa have answered over <strong>100 BILLION</strong> questions from people around the world. That's more questions than all the stars you can see in the sky on a clear night!</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAPTER 4 ═══════════════════ -->
+<div class="page ch-4">
+  <hr class="chapter-rule">
+  <div class="chapter-header">
+    <div class="ch-pill ch-4-pill">Chapter 4</div>
+    <h2>ZIPP Makes Art &amp; Stories 🎨</h2>
+  </div>
+
+  <div class="spread">
+    <div class="scene-box">
+      ✍️ "A dragon<br>flying over Cairo"<br>⬇️<br>🐉🌆✨
+      <div class="scene-label">Type words → get a picture!</div>
+    </div>
+    <div class="spread-text">
+      <h2>AI Can Create Things!</h2>
+      <p>"Can you draw, Zipp?" asked Zara. In an instant, Zipp projected a glowing picture of a purple dragon soaring over a golden city. Zara gasped. "You made that yourself?!"</p>
+      <p style="margin-top:12px">"I did! AI can write poems, paint pictures, compose music, and even write stories — all from just a few words!"</p>
+    </div>
+  </div>
+
+  <div class="fact-box green">
+    <div class="fact-icon">🖼️</div>
+    <p><strong>Real AI Art:</strong> In 2022, an AI-generated painting won first prize at an art competition. Some people were surprised — it made everyone ask: "Can a machine be creative?" What do <em>you</em> think?</p>
+  </div>
+
+  <div class="activity-box">
+    <h3>✍️ Write Your Own AI Prompt!</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Think of something magical: an animal + a place + an action. Example: "a unicorn baking cookies on the moon 🌙"</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Write it down or tell a grown-up. That sentence is called a <strong>"prompt"</strong> — the instruction you give to AI.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Now draw what you imagine! Compare your drawing to what an AI might create. Whose is cooler? 😄</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAPTER 5 ═══════════════════ -->
+<div class="page ch-5">
+  <hr class="chapter-rule">
+  <div class="chapter-header">
+    <div class="ch-pill ch-5-pill">Chapter 5</div>
+    <h2>Being Smart Around ZIPP 🛡️</h2>
+  </div>
+
+  <div class="spread">
+    <div class="spread-text">
+      <h2>Rules for Robot Friends</h2>
+      <p>Zipp told Zara something very important: even though AI is helpful, there are important rules to keep you safe, happy, and in charge.</p>
+    </div>
+    <div class="scene-box">
+      🛡️✅<br>Safe AI Rules<br>for Kids!
+      <div class="scene-label">Smart choices = safe adventures</div>
+    </div>
+  </div>
+
+  <div class="fact-box pink">
+    <div class="fact-icon">✅</div>
+    <p><strong>Rule 1:</strong> Always tell a grown-up if an AI says something strange or makes you feel uncomfortable. You are the boss!</p>
+  </div>
+  <div class="fact-box pink">
+    <div class="fact-icon">🔐</div>
+    <p><strong>Rule 2:</strong> Never share your real name, address, phone number, or school name with any AI app or chatbot. Keep your secrets safe!</p>
+  </div>
+  <div class="fact-box pink">
+    <div class="fact-icon">🧠</div>
+    <p><strong>Rule 3:</strong> AI can make mistakes! Always double-check important facts with a book, teacher, or trusted grown-up. AI is smart, but not perfect.</p>
+  </div>
+  <div class="fact-box pink">
+    <div class="fact-icon">⏰</div>
+    <p><strong>Rule 4:</strong> Balance screen time! Reading real books, playing outside, and spending time with friends are just as important as talking to AI.</p>
+  </div>
+
+  <div class="dialogue">
+    <div class="chat-avatar">👧</div>
+    <div class="bubble zara">"Don't worry, Zipp. I'll always use you wisely — and I'll always be the one making the important decisions!"</div>
+  </div>
+  <div class="dialogue right">
+    <div class="chat-avatar">🤖</div>
+    <div class="bubble robot">"That's exactly right, Zara. I am a tool — a very clever one — but <em>you</em> are the real genius. I just help you shine! ✨"</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHAPTER 6 ═══════════════════ -->
+<div class="page ch-6">
+  <hr class="chapter-rule">
+  <div class="chapter-header">
+    <div class="ch-pill ch-6-pill">Chapter 6</div>
+    <h2>The Future is YOURS 🚀</h2>
+  </div>
+
+  <div class="spread">
+    <div class="scene-box">
+      🏥 + 🌱 + 🚀<br>+ 🏫 + 🌊 + 🤖<br>= 🌍✨
+      <div class="scene-label">AI helping our whole world!</div>
+    </div>
+    <div class="spread-text">
+      <h2>You Will Shape AI's Future</h2>
+      <p>Zipp's eyes glowed brightly. "The kids of today will design the AI of tomorrow. You could build robots that heal sick people, or AI that saves rainforests, or machines that explore deep space!"</p>
+      <p style="margin-top:12px">Zara smiled. She wasn't afraid of AI anymore. She was <strong>excited</strong>.</p>
+    </div>
+  </div>
+
+  <div class="fact-box teal" style="margin-top:8px">
+    <div class="fact-icon">🏥</div>
+    <p><strong>AI in Medicine:</strong> Today, AI can spot diseases in X-rays faster than doctors, helping to save millions of lives. Kids who learn about AI now could invent the medical breakthroughs of the future.</p>
+  </div>
+  <div class="fact-box green">
+    <div class="fact-icon">🌿</div>
+    <p><strong>AI &amp; Nature:</strong> Scientists are using AI to protect endangered animals, track pollution, and even plant trees by using drones guided by intelligent systems.</p>
+  </div>
+
+  <div class="quiz-box" style="margin-top:32px">
+    <h3>🚀 Dream Big Quiz!</h3>
+    <div class="quiz-q">If YOU built an AI, what would you want it to do most?</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="dream(this,'🌍 Amazing! AI for the planet — you\'re a future environmental hero!')">🌍 Save the planet</button>
+      <button class="quiz-opt" onclick="dream(this,'🏥 Incredible! Medical AI could save millions of lives — go for it!')">🏥 Cure diseases</button>
+      <button class="quiz-opt" onclick="dream(this,'🚀 Stellar! Space explorers need AI — you could be the one to build it!')">🚀 Explore space</button>
+      <button class="quiz-opt" onclick="dream(this,'🎨 Beautiful! Creative AI that brings joy to everyone — the world needs you!')">🎨 Create art &amp; music</button>
+    </div>
+    <div class="quiz-result" id="dream-result"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
+<div class="page">
+  <h2 class="section-headline">What Parents Are Saying 💬</h2>
+  <p class="section-sub">Families around the world love Zara & Zipp!</p>
+  <div class="testimonials">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p>"My 7-year-old now explains AI to ME! She finished it in one sitting and asked for more. The quizzes are genius."</p>
+      <div class="testi-name">👩 Sarah M. — Parent, UK</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p>"Finally a book that talks to kids about AI in a way that's exciting, not scary. We read it together as a family."</p>
+      <div class="testi-name">👨 James T. — Dad of 3, USA</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p>"I'm a primary school teacher and I use this in my class. The activities are perfect and kids absolutely love Zipp!"</p>
+      <div class="testi-name">📚 Mrs. Leila K. — Teacher, AUS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ BUY NOW ═══════════════════ -->
+<div class="page" id="buy-now">
+  <div class="buy-box">
+    <h2>🤖 Get Zara &amp; Zipp Today!</h2>
+    <p>Give your child the gift of understanding the most important technology of their lifetime — in the most fun way possible.</p>
+    <div class="price-tag">
+      <span class="orig">Was $14.99</span>
+      $7.99
+    </div>
+    <br>
+    <a class="buy-btn" href="#">📥 Buy Now — Instant Download<https://www.amazon.com/dp/B0G2XDSBM7>
+    <div class="guarantee">🔒 30-Day Money-Back Guarantee · Secure Checkout · PDF &amp; eBook formats</div>
+  </div>
+
+  <div class="learn-grid" style="margin-top:0">
+    <div class="learn-card"><div class="learn-icon">📱</div><h4>Works Everywhere</h4><p>Read on tablet, phone, laptop, or print it out</p></div>
+    <div class="learn-card"><div class="learn-icon">🎁</div><h4>Perfect Gift</h4><p>Great for birthdays, holidays, or back-to-school</p></div>
+    <div class="learn-card"><div class="learn-icon">🖨️</div><h4>Print & Colour</h4><p>Pages designed for colouring and activities</p></div>
+    <div class="learn-card"><div class="learn-icon">🌐</div><h4>English + Arabic</h4><p>Available in multiple languages for global families</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ BACK COVER ═══════════════════ -->
+<div class="back-cover">
+  <div style="font-size:60px;margin-bottom:20px">🤖✨</div>
+  <h3>The future belongs to curious kids like you.</h3>
+  <p style="margin-top:14px">Every great inventor, coder, and scientist started as a child with big questions. Keep asking. Keep wondering. Keep learning.</p>
+  <p style="margin-top:28px;font-size:13px;opacity:0.45">© 2026 Zara & Zipp · All rights reserved</p>
+</div>
+
+<script>
+  // Generate stars on cover
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      animation-delay:${Math.random()*3}s;
+      animation-duration:${2 + Math.random()*3}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  function answer(btn, correct) {
+    const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+    opts.forEach(o => { o.disabled = true; o.classList.remove('correct','wrong'); });
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) opts.forEach(o => { if (o.textContent.includes('Artificial')) o.classList.add('correct'); });
+    document.getElementById('q1-result').textContent = correct
+      ? '🎉 Correct! AI = Artificial Intelligence!'
+      : '❌ Not quite! The answer is Artificial Intelligence.';
+  }
+
+  function answer2(btn, correct) {
+    const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+    opts.forEach(o => { o.disabled = true; o.classList.remove('correct','wrong'); });
+    btn.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) opts.forEach(o => { if (o.textContent.includes('examples')) o.classList.add('correct'); });
+    document.getElementById('q2-result').textContent = correct
+      ? '🎉 Brilliant! Lots of examples make AI smarter!'
+      : '❌ Not quite! AI learns by seeing lots and lots of examples.';
+  }
+
+  function dream(btn, msg) {
+    const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+    opts.forEach(o => { o.disabled = true; o.classList.remove('correct','wrong'); });
+    btn.classList.add('correct');
+    document.getElementById('dream-result').textContent = msg;
+  }
+</script>
+</body>
+</html>
